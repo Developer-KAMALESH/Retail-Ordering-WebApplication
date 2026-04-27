@@ -90,3 +90,30 @@
   top: 10px;
   left: 10px;
 }
+
+/* 🔹 Wrapper */
+.menu-wrapper {
+  padding: 20px;
+}
+
+/* 🔹 Filter Bar */
+.filter-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+/* 🔹 Filter Buttons */
+.filter-bar button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 20px;
+  background: #f1f1f1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-bar button:hover {
+  background: #e63946;
+  color: white;
+}

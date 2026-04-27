@@ -73,6 +73,12 @@ interface MenuItem {
 // }
 export class MenuComponent implements OnInit {
 
+  categories = [
+  { id: 0, name: 'All' },
+  { id: 1, name: 'Pizza' },
+  { id: 2, name: 'Burger' }
+];
+
   products: Product[] = [];
   filteredProducts: Product[] = [];
 
