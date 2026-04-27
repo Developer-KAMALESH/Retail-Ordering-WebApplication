@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MenuComponent } from './menu.component';
 import { By } from '@angular/platform-browser';
+import { vi } from 'vitest';
 
 describe('MenuComponent', () => {
   let component: MenuComponent;
@@ -14,6 +15,10 @@ describe('MenuComponent', () => {
     fixture = TestBed.createComponent(MenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   it('should create the component', () => {
