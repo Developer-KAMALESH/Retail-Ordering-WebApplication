@@ -1,13 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-
-interface CartItem {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-}
+import { CartService } from '../../mock-data/cart-service';
+import { CartItem } from '../../models/cart-item';
 
 @Component({
   selector: 'app-cart',
@@ -21,44 +16,44 @@ export class CartComponent implements OnInit {
   cartItems: CartItem[] = [];
   totalAmount = 0;
 
-  constructor(private router: Router) {}
+  constructor(
+    private cartService: CartService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.loadCartItems();
-    this.calculateTotal();
+    this.loadCart();
   }
 
-  loadCartItems(): void {
-    // Mock data (replace with service later)
-    this.cartItems = [
-      { id: 1, name: 'Margherita Pizza', price: 199, quantity: 2 },
-      { id: 2, name: 'Coke', price: 60, quantity: 1 },
-      { id: 3, name: 'Garlic Bread', price: 120, quantity: 1 }
-    ];
+  loadCart(): void {
+    this.cartItems = this.cartService.getCart();
+    this.calculateTotal();
   }
 
   calculateTotal(): void {
-    this.totalAmount = this.cartItems.reduce(
-      (total, item) => total + (item.price * item.quantity),
-      0
-    );
+    this.totalAmount = this.cartService.getTotalAmount();
   }
 
   increaseQuantity(item: CartItem): void {
-    item.quantity++;
-    this.calculateTotal();
+    this.cartService.updateQuantity(item.cartItemId, item.quantity + 1);
+    this.loadCart();
   }
 
   decreaseQuantity(item: CartItem): void {
     if (item.quantity > 1) {
-      item.quantity--;
-      this.calculateTotal();
+      this.cartService.updateQuantity(item.cartItemId, item.quantity - 1);
+      this.loadCart();
     }
   }
 
-  removeItem(itemId: number): void {
-    this.cartItems = this.cartItems.filter(item => item.id !== itemId);
-    this.calculateTotal();
+  removeItem(cartItemId: number): void {
+    this.cartService.removeItem(cartItemId);
+    this.loadCart();
+  }
+
+  clearCart(): void {
+    this.cartService.clearCart();
+    this.loadCart();
   }
 
   placeOrder(): void {
