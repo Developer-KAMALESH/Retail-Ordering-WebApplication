@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { CartService } from './../../mock-data/cart-service';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { Product } from '../../models/product';
@@ -72,6 +73,7 @@ interface MenuItem {
 //   }
 // }
 export class MenuComponent implements OnInit {
+  CartService=inject(CartService);
 
   categories = [
   { id: 0, name: 'All' },
@@ -100,4 +102,7 @@ export class MenuComponent implements OnInit {
     this.filteredProducts = this.products;
     this.selectedCategory = null;
   }
+  addToCart(productId: number) {
+  this.CartService.addToCart(productId, 1);
+}
 }
