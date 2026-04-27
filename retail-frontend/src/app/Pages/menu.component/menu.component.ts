@@ -6,20 +6,20 @@ import { Product } from '../../models/product';
 import { ProductService } from '../../mock-data/product-service';
 import { Router } from '@angular/router';
 
-interface MenuItem {
-  id: number;
-  name: string;
-  category: 'Pizza' | 'Drinks' | 'Breads';
-  brand: string;
-  price: number;
-}
+// interface MenuItem {
+//   id: number;
+//   name: string;
+//   category: 'Pizza' | 'Drinks' | 'Breads';
+//   brand: string;
+//   price: number;
+// }
 
 @Component({
   selector: 'app-menu',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+  styleUrl: './menu.component.css'
 })
 // export class MenuComponent implements OnInit {
 //   menuForm!: FormGroup;
@@ -74,39 +74,40 @@ interface MenuItem {
 //   }
 // }
 export class MenuComponent implements OnInit {
-  CartService=inject(CartService);
-  route=inject(Router);
+
+  private cartService = inject(CartService);
+  private router = inject(Router);
+  private productService = inject(ProductService);
 
   categories = [
-  { id: 0, name: 'All' },
-  { id: 1, name: 'Pizza' },
-  { id: 2, name: 'Burger' },
-  { id: 3, name: 'Beverages' }
-];
+    { id: 0, name: 'All' },
+    { id: 1, name: 'Pizza' },
+    { id: 2, name: 'Burger' },
+    { id: 3, name: 'Beverages' }
+  ];
 
   products: Product[] = [];
   filteredProducts: Product[] = [];
 
   selectedCategory: number | null = null;
 
-  constructor(private menuService: ProductService) {}
-
   ngOnInit(): void {
-    this.products = this.menuService.getProducts();
+    this.products = this.productService.getProducts();
     this.filteredProducts = this.products;
   }
 
   filterByCategory(categoryId: number) {
     this.selectedCategory = categoryId;
-    this.filteredProducts = this.menuService.getProductsByCategory(categoryId);
+    this.filteredProducts = this.productService.getProductsByCategory(categoryId);
   }
 
   resetFilter() {
     this.filteredProducts = this.products;
     this.selectedCategory = null;
   }
+
   addToCart(productId: number) {
-  this.CartService.addToCart(productId, 1);
-  this.route.navigate(['/cart']);
-}
+    this.cartService.addToCart(productId, 1);
+    // this.router.navigate(['/cart']);
+  }
 }

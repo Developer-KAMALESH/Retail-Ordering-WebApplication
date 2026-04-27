@@ -1,27 +1,64 @@
-/* 🔹 Container */
+/* 🔹 Wrapper */
+.menu-wrapper {
+  padding: 20px;
+  background: #f8f9fa;
+  min-height: 100vh;
+}
+
+/* 🔹 Filter Bar */
+.filter-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+/* 🔹 Filter Buttons */
+.filter-bar button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  background: #e9ecef;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.filter-bar button:hover {
+  background: #e63946;
+  color: white;
+}
+
+/* 🔥 Active filter */
+.filter-bar button.active {
+  background: #e63946;
+  color: white;
+  font-weight: 500;
+}
+
+/* 🔹 Grid Layout */
 .menu-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 20px;
-  padding: 20px;
 }
 
-/* 🔹 Card */
+/* 🔹 Product Card */
 .product-card {
-  background: #ffffff;
+  background: white;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: all 0.25s ease;
 }
 
-/* 🔥 Hover effect */
+/* 🔥 Hover Effect */
 .product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+  transform: translateY(-6px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* 🔹 Image */
+/* 🔹 Product Image */
 .product-card img {
   width: 100%;
   height: 150px;
@@ -37,7 +74,7 @@
 .product-title {
   font-size: 16px;
   font-weight: 600;
-  margin: 5px 0;
+  margin-bottom: 4px;
 }
 
 /* 🔹 Description */
@@ -53,67 +90,22 @@
   font-size: 16px;
   font-weight: bold;
   color: #e63946;
-  margin-top: 8px;
-}
-
-/* 🔹 Stock */
-.product-stock {
-  font-size: 12px;
-  color: #2a9d8f;
+  margin: 8px 0;
 }
 
 /* 🔹 Button */
 .add-btn {
   width: 100%;
-  margin-top: 10px;
   padding: 8px;
   border: none;
   border-radius: 6px;
   background: #e63946;
   color: white;
-  font-weight: 500;
+  font-size: 14px;
   cursor: pointer;
   transition: background 0.2s ease;
 }
 
 .add-btn:hover {
   background: #c92f3c;
-}
-
-.category-badge {
-  position: absolute;
-  background: #457b9d;
-  color: white;
-  padding: 4px 8px;
-  font-size: 12px;
-  border-radius: 4px;
-  top: 10px;
-  left: 10px;
-}
-
-/* 🔹 Wrapper */
-.menu-wrapper {
-  padding: 20px;
-}
-
-/* 🔹 Filter Bar */
-.filter-bar {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-/* 🔹 Filter Buttons */
-.filter-bar button {
-  padding: 8px 14px;
-  border: none;
-  border-radius: 20px;
-  background: #f1f1f1;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.filter-bar button:hover {
-  background: #e63946;
-  color: white;
 }
