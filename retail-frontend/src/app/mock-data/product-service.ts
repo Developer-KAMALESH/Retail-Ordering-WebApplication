@@ -23,16 +23,4 @@ export class ProductService {
     const product = PRODUCTS.find(p => p.productId === id);
     if (product) product.isAvailable = false;
   }
-  getProductsByCategory(categoryId?: number): Product[] {
-
-  if (!categoryId) {
-    return PRODUCTS.filter(p => p.isAvailable && p.stockQuantity > 0);
-  }
-
-  return PRODUCTS.filter(p =>
-    p.categoryId === categoryId &&
-    p.isAvailable &&
-    p.stockQuantity > 0
-  );
-}
 }

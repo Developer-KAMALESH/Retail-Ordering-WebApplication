@@ -15,6 +15,7 @@ export class CartComponent implements OnInit {
 
   cartItems: CartItem[] = [];
   totalAmount = 0;
+  orderPlaced = false;
 
   constructor(
     private cartService: CartService,
@@ -56,7 +57,18 @@ export class CartComponent implements OnInit {
     this.loadCart();
   }
 
-  placeOrder(): void {
-    this.router.navigate(['/order']);
-  }
+ placeOrder(): void {
+  if (this.cartItems.length === 0) return;
+
+  this.orderPlaced = true;
+
+  // optional: clear cart after order
+  this.cartService.clearCart();
+  this.loadCart();
+
+  // auto-hide message after few seconds (optional)
+  setTimeout(() => {
+    this.orderPlaced = false;
+  }, 3000);
+}
 }
