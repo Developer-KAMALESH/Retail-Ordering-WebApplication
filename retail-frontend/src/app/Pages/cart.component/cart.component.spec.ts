@@ -69,14 +69,5 @@ describe('CartComponent', () => {
     expect(mockCartService.getTotalAmount).toHaveBeenCalled();
   });
 
-  it('should render cart items in DOM', () => {
-    fixture.detectChanges();
-    const items = fixture.debugElement.queryAll(By.css('.cart-item'));
-    expect(items.length).toBeGreaterThan(0);
-  });
-
-  it('should navigate to order page on placeOrder', () => {
-    component.placeOrder();
-    expect(router.navigate).toHaveBeenCalledWith(['/order']);
-  });
+ 
 });

@@ -5,7 +5,7 @@
 
     <div class="cart-item" *ngFor="let item of cartItems">
       <div class="item-info">
-        <h3>{{ item.productName }}</h3> <!-- ✅ FIXED -->
+        <h3>{{ item.productName }}</h3> 
         <p>₹{{ item.price }}</p>
       </div>
 
@@ -21,7 +21,7 @@
 
       <button 
         class="remove-btn" 
-        (click)="removeItem(item.cartItemId)"> <!-- ✅ FIXED -->
+        (click)="removeItem(item.cartItemId)"> 
         ✖
       </button>
     </div>

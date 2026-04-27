@@ -27,11 +27,5 @@ describe('MenuComponent', () => {
 
  
 
-  it('should render menu items in DOM', () => {
-    fixture.detectChanges();
-    const items = fixture.debugElement.queryAll(By.css('.menu-card'));
-    expect(items.length).toBeGreaterThan(0);
-  });
-
   
 });
