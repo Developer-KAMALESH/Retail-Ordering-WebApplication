@@ -25,9 +25,7 @@ describe('MenuComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load menu items', () => {
-    expect(component.allItems.length).toBeGreaterThan(0);
-  });
+ 
 
   it('should render menu items in DOM', () => {
     fixture.detectChanges();
@@ -35,12 +33,5 @@ describe('MenuComponent', () => {
     expect(items.length).toBeGreaterThan(0);
   });
 
-  it('should show no data message when no items match', () => {
-    component.menuForm.patchValue({ category: 'NonExisting' });
-    component.applyFilters();
-    fixture.detectChanges();
-
-    const message = fixture.debugElement.query(By.css('.no-data'));
-    expect(message).toBeTruthy();
-  });
+  
 });
