@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink ],
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.css']
 })
@@ -13,7 +14,7 @@ export class LoginPageComponent implements OnInit {
   loginForm!: FormGroup;
   submitted = false;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private route: Router) {}
 
   ngOnInit(): void {
     this.initializeForm();
@@ -33,6 +34,7 @@ export class LoginPageComponent implements OnInit {
 
     const formData = this.loginForm.value;
     console.log('Login Successful:', formData);
+    this.route.navigate(['/menu']);
   }
 
   getControl(controlName: string) {

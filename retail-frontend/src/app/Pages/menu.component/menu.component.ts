@@ -1,83 +1,22 @@
-import { CartService } from './../../mock-data/cart-service';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { Product } from '../../models/product';
-import { ProductService } from '../../mock-data/product-service';
-import { Router } from '@angular/router';
-
-// interface MenuItem {
-//   id: number;
-//   name: string;
-//   category: 'Pizza' | 'Drinks' | 'Breads';
-//   brand: string;
-//   price: number;
-// }
+import { ProductApiService } from '../../services/product.service';
+import { CartApiService } from '../../services/cart.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css'
 })
-// export class MenuComponent implements OnInit {
-//   menuForm!: FormGroup;
-//   allItems: MenuItem[] = [];
-//   filteredItems: MenuItem[] = [];
-
-//   categories: string[] = ['Pizza', 'Drinks', 'Breads'];
-//   brands: string[] = ['Dominos', 'PizzaHut', 'Local'];
-
-//   constructor(private fb: FormBuilder) {}
-
-//   ngOnInit(): void {
-//     this.initializeForm();
-//     this.loadMenuItems();
-//     this.applyFilters();
-
-//     this.menuForm.valueChanges.subscribe(() => {
-//       this.applyFilters();
-//     });
-//   }
-
-//   initializeForm(): void {
-//     this.menuForm = this.fb.group({
-//       category: [''],
-//       brand: ['']
-//     });
-//   }
-
-//   loadMenuItems(): void {
-//     this.allItems = [
-//       { id: 1, name: 'Margherita', category: 'Pizza', brand: 'Dominos', price: 199 },
-//       { id: 2, name: 'Pepsi', category: 'Drinks', brand: 'Local', price: 50 },
-//       { id: 3, name: 'Garlic Bread', category: 'Breads', brand: 'PizzaHut', price: 120 },
-//       { id: 4, name: 'Veg Loaded Pizza', category: 'Pizza', brand: 'PizzaHut', price: 299 },
-//       { id: 5, name: 'Coke', category: 'Drinks', brand: 'Dominos', price: 60 }
-//     ];
-//   }
-
-//   applyFilters(): void {
-//     const { category, brand } = this.menuForm.value;
-
-//     this.filteredItems = this.allItems.filter(item => {
-//       return (
-//         (!category || item.category === category) &&
-//         (!brand || item.brand === brand)
-//       );
-//     });
-//   }
-
-//   trackById(index: number, item: MenuItem): number {
-//     return item.id;
-//   }
-// }
 export class MenuComponent implements OnInit {
 
-  private cartService = inject(CartService);
-  private router = inject(Router);
-  private productService = inject(ProductService);
+  private productApi = inject(ProductApiService);
+  private cartApi = inject(CartApiService);
+  private authService = inject(AuthService);
 
   categories = [
     { id: 0, name: 'All' },
@@ -86,28 +25,32 @@ export class MenuComponent implements OnInit {
     { id: 3, name: 'Beverages' }
   ];
 
-  products: Product[] = [];
-  filteredProducts: Product[] = [];
+  // signals
+  allProducts = signal<Product[]>([]);
+  selectedCategory = signal<number>(0);
 
-  selectedCategory: number | null = null;
+  // derived: filter client-side from loaded products
+  filteredProducts = computed(() => {
+    const cat = this.selectedCategory();
+    if (cat === 0) return this.allProducts();
+    return this.allProducts().filter(p => p.categoryId === cat);
+  });
 
   ngOnInit(): void {
-    this.products = this.productService.getProducts();
-    this.filteredProducts = this.products;
+    this.loadAll();
   }
 
-  filterByCategory(categoryId: number) {
-    this.selectedCategory = categoryId;
-    this.filteredProducts = this.productService.getProductsByCategory(categoryId);
+  loadAll(): void {
+    this.productApi.getProducts().subscribe(p => this.allProducts.set(p));
   }
 
-  resetFilter() {
-    this.filteredProducts = this.products;
-    this.selectedCategory = null;
+  filterByCategory(categoryId: number): void {
+    this.selectedCategory.set(categoryId);
   }
 
-  addToCart(productId: number) {
-    this.cartService.addToCart(productId, 1);
-    // this.router.navigate(['/cart']);
+  addToCart(productId: number): void {
+    const userId = this.authService.userId;
+    if (!userId) { alert('Please login to add items to cart'); return; }
+    this.cartApi.addToCart(userId, productId, 1).subscribe();
   }
 }

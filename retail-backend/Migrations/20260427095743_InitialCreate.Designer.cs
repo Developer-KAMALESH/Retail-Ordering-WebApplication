@@ -5,14 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using RetailBackend.Data;
 
 #nullable disable
 
-namespace RetailBackend.Migrations
+namespace retail_backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260427084949_InitialCreate")]
+    [Migration("20260427095743_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -25,7 +24,7 @@ namespace RetailBackend.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("RetailBackend.Models.Cart", b =>
+            modelBuilder.Entity("retail_backend.Models.Cart", b =>
                 {
                     b.Property<int>("CartId")
                         .ValueGeneratedOnAdd()
@@ -43,7 +42,7 @@ namespace RetailBackend.Migrations
                     b.ToTable("Carts");
                 });
 
-            modelBuilder.Entity("RetailBackend.Models.CartItem", b =>
+            modelBuilder.Entity("retail_backend.Models.CartItem", b =>
                 {
                     b.Property<int>("CartItemId")
                         .ValueGeneratedOnAdd()
@@ -69,7 +68,7 @@ namespace RetailBackend.Migrations
                     b.ToTable("CartItems");
                 });
 
-            modelBuilder.Entity("RetailBackend.Models.Category", b =>
+            modelBuilder.Entity("retail_backend.Models.Category", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
@@ -86,7 +85,7 @@ namespace RetailBackend.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("RetailBackend.Models.Order", b =>
+            modelBuilder.Entity("retail_backend.Models.Order", b =>
                 {
                     b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd()
@@ -106,7 +105,6 @@ namespace RetailBackend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("TotalAmount")
-                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("UserId")
@@ -119,7 +117,7 @@ namespace RetailBackend.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("RetailBackend.Models.OrderItem", b =>
+            modelBuilder.Entity("retail_backend.Models.OrderItem", b =>
                 {
                     b.Property<int>("OrderItemId")
                         .ValueGeneratedOnAdd()
@@ -131,7 +129,6 @@ namespace RetailBackend.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
-                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("ProductId")
@@ -154,7 +151,7 @@ namespace RetailBackend.Migrations
                     b.ToTable("OrderItems");
                 });
 
-            modelBuilder.Entity("RetailBackend.Models.Product", b =>
+            modelBuilder.Entity("retail_backend.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
@@ -181,7 +178,6 @@ namespace RetailBackend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
-                        .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("SellerId")
@@ -199,7 +195,7 @@ namespace RetailBackend.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("RetailBackend.Models.User", b =>
+            modelBuilder.Entity("retail_backend.Models.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -212,7 +208,7 @@ namespace RetailBackend.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -234,32 +230,35 @@ namespace RetailBackend.Migrations
 
                     b.HasKey("UserId");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("RetailBackend.Models.Cart", b =>
+            modelBuilder.Entity("retail_backend.Models.Cart", b =>
                 {
-                    b.HasOne("RetailBackend.Models.User", "User")
+                    b.HasOne("retail_backend.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("RetailBackend.Models.CartItem", b =>
+            modelBuilder.Entity("retail_backend.Models.CartItem", b =>
                 {
-                    b.HasOne("RetailBackend.Models.Cart", "Cart")
+                    b.HasOne("retail_backend.Models.Cart", "Cart")
                         .WithMany()
                         .HasForeignKey("CartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RetailBackend.Models.Product", "Product")
+                    b.HasOne("retail_backend.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Cart");
@@ -267,35 +266,35 @@ namespace RetailBackend.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("RetailBackend.Models.Order", b =>
+            modelBuilder.Entity("retail_backend.Models.Order", b =>
                 {
-                    b.HasOne("RetailBackend.Models.User", "User")
+                    b.HasOne("retail_backend.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("RetailBackend.Models.OrderItem", b =>
+            modelBuilder.Entity("retail_backend.Models.OrderItem", b =>
                 {
-                    b.HasOne("RetailBackend.Models.Order", "Order")
+                    b.HasOne("retail_backend.Models.Order", "Order")
                         .WithMany()
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RetailBackend.Models.Product", "Product")
+                    b.HasOne("retail_backend.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("RetailBackend.Models.User", "Seller")
+                    b.HasOne("retail_backend.Models.User", "Seller")
                         .WithMany()
                         .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Order");
@@ -305,33 +304,23 @@ namespace RetailBackend.Migrations
                     b.Navigation("Seller");
                 });
 
-            modelBuilder.Entity("RetailBackend.Models.Product", b =>
+            modelBuilder.Entity("retail_backend.Models.Product", b =>
                 {
-                    b.HasOne("RetailBackend.Models.Category", "Category")
-                        .WithMany("Products")
+                    b.HasOne("retail_backend.Models.Category", "Category")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RetailBackend.Models.User", "Seller")
-                        .WithMany("Products")
+                    b.HasOne("retail_backend.Models.User", "Seller")
+                        .WithMany()
                         .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Category");
 
                     b.Navigation("Seller");
-                });
-
-            modelBuilder.Entity("RetailBackend.Models.Category", b =>
-                {
-                    b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("RetailBackend.Models.User", b =>
-                {
-                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

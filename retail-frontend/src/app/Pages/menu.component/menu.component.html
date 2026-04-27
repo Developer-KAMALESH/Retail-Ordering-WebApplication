@@ -1,45 +1,33 @@
 <div class="menu-wrapper">
 
-  <!-- 🔹 Filters (separate section) -->
   <div class="filter-bar">
+    @for (cat of categories; track cat.id) {
+      <button
+        [class.active]="selectedCategory() === cat.id"
+        (click)="filterByCategory(cat.id)">
+        {{ cat.name }}
+      </button>
+    }
+  </div>
 
-  @for (cat of categories; track cat.id) {
-
-    <button
-      [class.active]="selectedCategory === cat.id"
-      (click)="cat.id === 0 ? resetFilter() : filterByCategory(cat.id)">
-
-      {{ cat.name }}
-
-    </button>
-
-  }
-
-</div>
-
-  <!-- 🔹 Product Grid -->
   <div class="menu-container">
-
-  @for (product of filteredProducts; track product.productId) {
-
-    <div class="product-card">
-
-      <img [src]="product.imageUrl" />
-
-      <div class="product-content">
-        <div class="product-title">{{ product.name }}</div>
-        <div class="product-desc">{{ product.description }}</div>
-        <div class="product-price">₹ {{ product.price }}</div>
-
-        <button class="add-btn" (click)="addToCart(product.productId)">
-                  Add to Cart
-        </button>
+    @for (product of filteredProducts(); track product.productId) {
+      <div class="product-card">
+        <img [src]="product.imageUrl" />
+        <div class="product-content">
+          <div class="product-title">{{ product.name }}</div>
+          <div class="product-desc">{{ product.description }}</div>
+          <div class="product-price">₹ {{ product.price }}</div>
+          <button class="add-btn" (click)="addToCart(product.productId)">
+            Add to Cart
+          </button>
+        </div>
       </div>
+    }
 
-    </div>
-
-  }
-
-</div>
+    @if (filteredProducts().length === 0) {
+      <p style="padding: 2rem;">No products found.</p>
+    }
+  </div>
 
 </div>
