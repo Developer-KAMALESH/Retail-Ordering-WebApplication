@@ -1,0 +1,63 @@
+.menu-container {
+  padding: 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filters select {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.menu-card {
+  border: 1px solid #eee;
+  padding: 15px;
+  border-radius: 10px;
+  background: #fafafa;
+  transition: transform 0.2s ease;
+}
+
+.menu-card:hover {
+  transform: translateY(-5px);
+}
+
+.category {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.brand {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.price {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.no-data {
+  text-align: center;
+  margin-top: 20px;
+  color: #999;
+}
