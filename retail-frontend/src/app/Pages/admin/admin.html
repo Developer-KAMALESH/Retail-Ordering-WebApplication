@@ -1,0 +1,80 @@
+<h2>Admin Panel</h2>
+
+<div class="form-box">
+
+  <div class="form-group">
+    <label>Product Name</label>
+    <input [(ngModel)]="form.name" />
+  </div>
+
+  <div class="form-group">
+    <label>Description</label>
+    <input [(ngModel)]="form.description" />
+  </div>
+
+  <div class="form-group">
+    <label>Price (₹)</label>
+    <input [(ngModel)]="form.price" type="number" />
+  </div>
+
+  <div class="form-group">
+    <label>Stock Quantity</label>
+    <input [(ngModel)]="form.stockQuantity" type="number" />
+  </div>
+
+  <div class="form-group">
+    <label>Category ID</label>
+    <input [(ngModel)]="form.categoryId" type="number" />
+  </div>
+
+  <div class="form-group">
+    <label>Category Name</label>
+    <select [(ngModel)]="form.categoryId">
+  <option [value]="1">Pizza</option>
+  <option [value]="2">Burger</option>
+  <option [value]="3">Beverages</option>
+</select>
+  </div>
+
+  <div class="form-group">
+    <label>Image URL</label>
+    <input [(ngModel)]="form.imageUrl" />
+  </div>
+
+  <div class="form-actions">
+    <button (click)="submitForm()">
+      {{ isEditMode ? 'Update Product' : 'Add Product' }}
+    </button>
+
+    <button type="button" (click)="resetForm()">
+      Reset
+    </button>
+  </div>
+
+</div>
+
+<hr />
+
+<div class="admin-grid">
+
+  @for (product of products; track product.productId) {
+
+    <div class="admin-card">
+
+      <img [src]="product.imageUrl" />
+
+      <h3>{{ product.name }}</h3>
+      <p><strong>₹ {{ product.price }}</strong></p>
+      <p>Stock: {{ product.stockQuantity }}</p>
+      <p>Category: {{ product.categoryName }}</p>
+
+      <div class="actions">
+        <button (click)="editProduct(product)">Edit</button>
+        <button (click)="deleteProduct(product.productId)">Delete</button>
+      </div>
+
+    </div>
+
+  }
+
+</div>

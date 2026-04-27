@@ -61,6 +61,7 @@ export class CartComponent implements OnInit {
   if (this.cartItems.length === 0) return;
 
   this.orderPlaced = true;
+  alert('Order placed successfully!');
 
   // optional: clear cart after order
   this.cartService.clearCart();

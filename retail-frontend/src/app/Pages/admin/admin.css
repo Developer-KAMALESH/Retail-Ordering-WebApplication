@@ -1,0 +1,122 @@
+/* 🔹 Form */
+.form-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.form-box input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.form-box button {
+  padding: 8px 16px;
+  background: #457b9d;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* 🔹 Grid */
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+/* 🔹 Card */
+.admin-card {
+  background: white;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.admin-card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+}
+
+/* 🔹 Actions */
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.actions button {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.actions button:first-child {
+  background: #f4a261;
+}
+
+.actions button:last-child {
+  background: #e63946;
+  color: white;
+}
+/* 🔹 Form Layout */
+.form-box {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+/* 🔹 Form Group */
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 🔹 Labels */
+.form-group label {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: #444;
+}
+
+/* 🔹 Inputs */
+.form-group input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+}
+
+.form-group input:focus {
+  border-color: #457b9d;
+}
+
+/* 🔹 Actions */
+.form-actions {
+  grid-column: span 2;
+  display: flex;
+  gap: 10px;
+}
+
+.form-actions button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.form-actions button:first-child {
+  background: #457b9d;
+  color: white;
+}
+
+.form-actions button:last-child {
+  background: #ccc;
+}
