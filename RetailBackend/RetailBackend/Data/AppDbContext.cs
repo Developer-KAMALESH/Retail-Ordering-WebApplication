@@ -44,13 +44,13 @@ namespace RetailBackend.Data
             // ---------------- PRODUCT ----------------
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Category)
-                .WithMany()
+                .WithMany(c => c.Products)
                 .HasForeignKey(p => p.CategoryId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Product>()
                 .HasOne(p => p.Seller)
-                .WithMany()
+                .WithMany(u => u.Products)
                 .HasForeignKey(p => p.SellerId)
                 .OnDelete(DeleteBehavior.NoAction);
 
