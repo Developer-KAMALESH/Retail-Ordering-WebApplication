@@ -20,5 +20,6 @@ namespace RetailBackend.Models
         public bool IsActive { get; set; } = true;
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public List<Product> Products { get; set; }
     }
 }

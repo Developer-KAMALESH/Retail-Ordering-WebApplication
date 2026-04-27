@@ -28,9 +28,10 @@ namespace RetailBackend.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(CreateProductDto dto)
+        public async Task<IActionResult> Add(CreateProductDto dto)
         {
-            return Ok(_productService.Add(dto));
+            var result = await _productService.Add(dto);
+            return Ok(result);
         }
 
         [HttpPut("{id}")]
