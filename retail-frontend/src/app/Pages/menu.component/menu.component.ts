@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { Product } from '../../models/product';
 import { ProductService } from '../../mock-data/product-service';
+import { Router } from '@angular/router';
 
 interface MenuItem {
   id: number;
@@ -74,6 +75,7 @@ interface MenuItem {
 // }
 export class MenuComponent implements OnInit {
   CartService=inject(CartService);
+  route=inject(Router);
 
   categories = [
   { id: 0, name: 'All' },
@@ -105,5 +107,6 @@ export class MenuComponent implements OnInit {
   }
   addToCart(productId: number) {
   this.CartService.addToCart(productId, 1);
+  this.route.navigate(['/cart']);
 }
 }
