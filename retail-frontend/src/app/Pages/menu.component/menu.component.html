@@ -1,32 +1,29 @@
 <div class="menu-container">
-  <h2 class="title">Menu</h2>
 
-  <form [formGroup]="menuForm" class="filters">
-    <select formControlName="category">
-      <option value="">All Categories</option>
-      <option *ngFor="let cat of categories" [value]="cat">
-        {{ cat }}
-      </option>
-    </select>
+  <div class="product-card" *ngFor="let product of filteredProducts">
 
-    <select formControlName="brand">
-      <option value="">All Brands</option>
-      <option *ngFor="let brand of brands" [value]="brand">
-        {{ brand }}
-      </option>
-    </select>
-  </form>
+    <img [src]="product.imageUrl" alt="product" />
 
-  <div class="menu-grid">
-    <div class="menu-card" *ngFor="let item of filteredItems; trackBy: trackById">
-      <h3>{{ item.name }}</h3>
-      <p class="category">{{ item.category }}</p>
-      <p class="brand">{{ item.brand }}</p>
-      <p class="price">₹{{ item.price }}</p>
+    <div class="product-content">
+      <div class="product-title">{{ product.name }}</div>
+
+      <div class="product-desc">
+        {{ product.description }}
+      </div>
+
+      <div class="product-price">
+        ₹ {{ product.price }}
+      </div>
+
+      <div class="product-stock">
+        Stock: {{ product.stockQuantity }}
+      </div>
+
+      <button class="add-btn">
+        Add to Cart
+      </button>
     </div>
+
   </div>
 
-  <p *ngIf="filteredItems.length === 0" class="no-data">
-    No items found
-  </p>
 </div>
