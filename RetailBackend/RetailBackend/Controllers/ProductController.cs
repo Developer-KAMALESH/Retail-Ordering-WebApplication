@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RetailBackend.DTOs;
+using RetailBackend.Services;
 
 namespace RetailBackend.Controllers
 {
@@ -26,13 +28,13 @@ namespace RetailBackend.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add(ProductDto dto)
+        public IActionResult Add(CreateProductDto dto)
         {
             return Ok(_productService.Add(dto));
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, ProductDto dto)
+        public IActionResult Update(int id, UpdateProductDto dto)
         {
             return Ok(_productService.Update(id, dto));
         }

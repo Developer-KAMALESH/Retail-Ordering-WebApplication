@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using RetailBackend.DTOs;
+using RetailBackend.Services;
 
 namespace RetailBackend.Controllers
 {
@@ -15,7 +17,7 @@ namespace RetailBackend.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add(AddCartItemDto dto)
+        public IActionResult Add(AddToCartDto dto)
         {
             return Ok(_cartService.AddToCart(dto));
         }

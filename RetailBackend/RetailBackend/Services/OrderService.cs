@@ -1,4 +1,8 @@
-﻿namespace RetailBackend.Services
+﻿using RetailBackend.Data;
+using RetailBackend.DTOs;
+using RetailBackend.Models;
+
+namespace RetailBackend.Services
 {
     public interface IOrderService
     {
@@ -7,7 +11,7 @@
         List<Order> GetAllOrders();
         string UpdateStatus(int orderId, string status);
     }
-    public class OrderService
+    public class OrderService : IOrderService
     {
         private readonly AppDbContext _context;
 

@@ -1,14 +1,18 @@
-﻿namespace RetailBackend.Services
+﻿using RetailBackend.Data;
+using RetailBackend.DTOs;
+using RetailBackend.Models;
+
+namespace RetailBackend.Services
 {
     public interface ICartService
     {
-        string AddToCart(AddCartItemDto dto);
+        string AddToCart(AddToCartDto dto);
         Cart GetCart(int userId);
         string UpdateCart(UpdateCartItemDto dto);
         string RemoveItem(int itemId);
         string ClearCart(int userId);
     }
-    public class CartService
+    public class CartService : ICartService
     {
         private readonly AppDbContext _context;
 
@@ -17,7 +21,7 @@
             _context = context;
         }
 
-        public string AddToCart(AddCartItemDto dto)
+        public string AddToCart(AddToCartDto dto)
         {
             var cart = _context.Carts.FirstOrDefault(c => c.UserId == dto.UserId);
 

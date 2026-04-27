@@ -1,17 +1,29 @@
-﻿namespace RetailBackend.Services
+﻿using Microsoft.IdentityModel.Tokens;
+using RetailBackend.Data;
+using RetailBackend.DTOs;
+using RetailBackend.Models;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+
+namespace RetailBackend.Services
 {
+
     public interface IAuthService
     {
         string Register(RegisterDto dto);
         string Login(LoginDto dto);
     }
+
+
     public class AuthService : IAuthService
     {
         private readonly AppDbContext _context;
-
-        public AuthService(AppDbContext context)
+        private readonly IConfiguration _configuration;
+        public AuthService(AppDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
         public string Register(RegisterDto dto)
@@ -39,8 +51,33 @@
             if (user == null)
                 return "Invalid credentials";
 
-            // (JWT generation assumed already done in your project setup)
-            return "Login successful (token generated in real setup)";
+            // 🔐 JWT Generation
+            var claims = new[]
+            {
+        new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+        new Claim(ClaimTypes.Email, user.Email),
+        new Claim(ClaimTypes.Role, user.Role)
+    };
+
+            var key = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(_configuration["Jwt:Key"])
+            );
+
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(
+                    Convert.ToDouble(_configuration["Jwt:ExpiryMinutes"])
+                ),
+                signingCredentials: creds
+            );
+
+            var jwtToken = new JwtSecurityTokenHandler().WriteToken(token);
+
+            return jwtToken;
         }
     }
 }

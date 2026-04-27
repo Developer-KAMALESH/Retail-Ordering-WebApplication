@@ -5,6 +5,7 @@ namespace RetailBackend.Models
 {
     public class Product
     {
+      
         [Key]
         public int ProductId { get; set; }
 
@@ -15,13 +16,9 @@ namespace RetailBackend.Models
         public decimal Price { get; set; }
 
         public int CategoryId { get; set; }
-
-        [ForeignKey("CategoryId")]
-        public Category Category { get; set; }
+        public string Category { get; set; }
 
         public int SellerId { get; set; }
-
-        [ForeignKey("SellerId")]
         public User Seller { get; set; }
 
         public int StockQuantity { get; set; }

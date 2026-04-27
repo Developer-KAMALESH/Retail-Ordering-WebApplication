@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RetailBackend.DTOs;
+using RetailBackend.Services;
 
 namespace RetailBackend.Controllers
 {
@@ -29,4 +31,4 @@ namespace RetailBackend.Controllers
     }
 
 }
-}
+

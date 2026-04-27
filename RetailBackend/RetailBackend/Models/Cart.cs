@@ -10,7 +10,7 @@ namespace RetailBackend.Models
 
         public int UserId { get; set; }
 
-        [ForeignKey("UserId")]
+        //[ForeignKey("UserId")]   // ✅ ADD THIS
         public User User { get; set; }
     }
 }

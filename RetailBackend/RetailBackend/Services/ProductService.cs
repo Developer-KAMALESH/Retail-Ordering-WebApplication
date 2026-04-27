@@ -1,14 +1,19 @@
-﻿namespace RetailBackend.Services
+﻿using RetailBackend.Data;
+using RetailBackend.DTOs;
+using RetailBackend.Models;
+using Microsoft.EntityFrameworkCore;
+
+namespace RetailBackend.Services
 {
     public interface IProductService
     {
         List<Product> GetAll();
         Product GetById(int id);
-        string Add(ProductDto dto);
-        string Update(int id, ProductDto dto);
+        Task<string> Add(CreateProductDto dto);
+        string Update(int id, UpdateProductDto dto);
         string Delete(int id);
     }
-    public class ProductService
+    public class ProductService : IProductService
     {
         private readonly AppDbContext _context;
 
@@ -27,7 +32,7 @@
             return _context.Products.Find(id);
         }
 
-        public string Add(ProductDto dto)
+        public async Task<string> Add(CreateProductDto dto)
         {
             var product = new Product
             {
@@ -36,17 +41,18 @@
                 Price = dto.Price,
                 CategoryId = dto.CategoryId,
                 StockQuantity = 0,
+                SellerId = dto.SellerId,
                 IsAvailable = true,
                 ImageUrl = dto.ImageUrl
             };
 
             _context.Products.Add(product);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return "Product added";
         }
 
-        public string Update(int id, ProductDto dto)
+        public string Update(int id, UpdateProductDto dto)
         {
             var product = _context.Products.Find(id);
             if (product == null) return "Not found";
