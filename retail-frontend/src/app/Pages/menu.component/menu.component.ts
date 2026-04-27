@@ -78,7 +78,8 @@ export class MenuComponent implements OnInit {
   categories = [
   { id: 0, name: 'All' },
   { id: 1, name: 'Pizza' },
-  { id: 2, name: 'Burger' }
+  { id: 2, name: 'Burger' },
+  { id: 3, name: 'Beverages' }
 ];
 
   products: Product[] = [];
