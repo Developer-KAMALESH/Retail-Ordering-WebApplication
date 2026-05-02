@@ -4,7 +4,7 @@
   @if (!isLoggedIn) {
     <p>Please <a href="/login">login</a> to view your cart.</p>
   } @else if (orderPlaced()) {
-    <p style="color: green; font-weight: bold;">✅ Order placed successfully!</p>
+    <p style="color: green; font-weight: bold;">Thank you! Order placed successfully!</p>
   } @else if (cartItems().length === 0) {
     <p>Your cart is empty 🛒</p>
   } @else {
